@@ -8,5 +8,5 @@ def dashboard(request):
 
 
 def profile_list(request):
-    profiles  = Profile.objects.execlude(user=request.user)
+    profiles  = Profile.objects.exclude(user=request.user)
     return render(request, "dwitter/profile_list.html", {"profiles":profiles} )    
