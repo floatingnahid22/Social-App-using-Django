@@ -30,5 +30,11 @@ def profile(request, pk):
     return render(request, "dwitter/profile.html", {"profile":profile})  
 
 def dashboard(request):
-    form  = DweetForm()
-    return render(request, "dwitter/dashboard.html" , {"form":form})          
+    if request.method == "POST":
+        form = DweetForm(request.POST)
+        if form.is_valid():
+            dweet = form.save(commit=False)
+            dweet.user = request.user
+            dweet.save()
+    form = DweetForm()
+    return render(request, "dwitter/dashboard.html", {"form": form})
