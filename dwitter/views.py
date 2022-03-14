@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import DweetForm
-from .models import Profile
+from .models import Dweet, Profile
 
 # Create your views here.
 
@@ -37,5 +37,12 @@ def dashboard(request):
             dweet.user = request.user
             dweet.save()
             return redirect("dwitter:dashboard")
+
+    followed_dweets  = Dweet.objects.filter(
+        user__profile__in = request.user.profile.follows.all().order_by("-created_at")
+    )
+
     form = DweetForm()
-    return render(request, "dwitter/dashboard.html", {"form": form})
+    return render(request, "dwitter/dashboard.html", 
+    {"form": form, "dweets":followed_dweets},
+    )
