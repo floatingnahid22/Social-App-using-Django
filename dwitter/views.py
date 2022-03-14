@@ -26,4 +26,7 @@ def profile(request, pk):
         elif action  == "unfollow":
             current_user_profile.follows.remove(profile)
         current_user_profile.save()        
-    return render(request, "dwitter/profile.html", {"profile":profile})        
+    return render(request, "dwitter/profile.html", {"profile":profile})  
+
+def dashboard(request):
+    return render(request, "dwitter/dashboard.html")          
