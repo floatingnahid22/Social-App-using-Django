@@ -47,3 +47,4 @@ def dashboard(request):
         "dwitter/dashboard.html",
         {"form": form, "dweets": followed_dweets},
     )
+
