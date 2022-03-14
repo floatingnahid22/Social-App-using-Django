@@ -30,19 +30,20 @@ def profile(request, pk):
     return render(request, "dwitter/profile.html", {"profile":profile})  
 
 def dashboard(request):
+    form = DweetForm(request.POST or None)
     if request.method == "POST":
-        form = DweetForm(request.POST or None)
         if form.is_valid():
             dweet = form.save(commit=False)
             dweet.user = request.user
             dweet.save()
             return redirect("dwitter:dashboard")
 
-    followed_dweets  = Dweet.objects.filter(
-        user__profile__in = request.user.profile.follows.all().order_by("-created_at")
-    )
+    followed_dweets = Dweet.objects.filter(
+        user__profile__in=request.user.profile.follows.all()
+    ).order_by("-created_at")
 
-    form = DweetForm()
-    return render(request, "dwitter/dashboard.html", 
-    {"form": form, "dweets":followed_dweets},
+    return render(
+        request,
+        "dwitter/dashboard.html",
+        {"form": form, "dweets": followed_dweets},
     )
