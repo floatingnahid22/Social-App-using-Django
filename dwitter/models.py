@@ -22,4 +22,12 @@ class Profile(models.Model):
             user_profile.save()
             user_profile.follows.add(instance.profile)
             user_profile.save()
-    
+
+
+            
+class Dweet(models.Model):
+    user       = models.ForeignKey(
+        User, related_name="dweets", on_delete=models.DO_NOTHING
+    )
+    body       = models.CharField(max_length=140)
+    created_at = models.DateTimeField(auto_now_add=True)
