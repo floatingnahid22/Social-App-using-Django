@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import DweetForm
 from .models import Profile
 
 # Create your views here.
@@ -29,4 +30,5 @@ def profile(request, pk):
     return render(request, "dwitter/profile.html", {"profile":profile})  
 
 def dashboard(request):
-    return render(request, "dwitter/dashboard.html")          
+    form  = DweetForm()
+    return render(request, "dwitter/dashboard.html" , {"form":form})          
